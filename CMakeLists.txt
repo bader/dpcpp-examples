@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.18)
-project(CXX)
+project(dpcpp-examples LANGUAGES CXX)
 
 add_compile_options(-fsycl)
 add_link_options(-fsycl)
