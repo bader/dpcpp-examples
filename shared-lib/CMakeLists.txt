@@ -1,5 +1,6 @@
 add_library(sharedlib SHARED
-  lib.cpp
+  lib-a.cpp
+  lib-b.cpp
 )
 
 add_executable(shared-lib-app
