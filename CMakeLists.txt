@@ -7,5 +7,4 @@ add_link_options(-fsycl)
 enable_testing()
 
 add_subdirectory(multi-source-app)
-add_subdirectory(static-lib)
-add_subdirectory(shared-lib)
+add_subdirectory(library)
