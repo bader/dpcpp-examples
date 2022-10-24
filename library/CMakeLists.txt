@@ -98,3 +98,53 @@ add_test(NAME test-static-no-rdc-pk
        COMMAND app-static-no-rdc-pk)
 add_test(NAME test-shared-no-rdc-pk
        COMMAND app-shared-no-rdc-pk)
+
+############ per-kernel + debug ###############
+add_library(libst-pk-g STATIC
+${LIB_SOURCES}
+)
+target_compile_options(libst-pk-g PUBLIC -fsycl-device-code-split=per_kernel -g)
+add_library(libsh-pk-g SHARED
+${LIB_SOURCES}
+)
+target_compile_options(libsh-pk-g PUBLIC -fsycl-device-code-split=per_kernel -g)
+
+add_executable(app-static-pk-g
+app.cpp
+)
+add_executable(app-shared-pk-g
+app.cpp
+)
+
+target_link_libraries(app-static-pk-g libst-pk-g)
+target_link_libraries(app-shared-pk-g libsh-pk-g)
+
+add_test(NAME test-static-pk-g
+       COMMAND app-static-pk-g)
+add_test(NAME test-shared-pk-g
+       COMMAND app-shared-pk-g)
+
+############ no-rdc + per-kernel + debug ###############
+add_library(libst-no-rdc-pk-g STATIC
+${LIB_SOURCES}
+)
+target_compile_options(libst-no-rdc-pk-g PUBLIC -fno-gpu-rdc -fsycl-device-code-split=per_kernel -g)
+add_library(libsh-no-rdc-pk-g SHARED
+${LIB_SOURCES}
+)
+target_compile_options(libsh-no-rdc-pk-g PUBLIC -fno-gpu-rdc -fsycl-device-code-split=per_kernel -g)
+
+add_executable(app-static-no-rdc-pk-g
+app.cpp
+)
+add_executable(app-shared-no-rdc-pk-g
+app.cpp
+)
+
+target_link_libraries(app-static-no-rdc-pk-g libst-no-rdc-pk-g)
+target_link_libraries(app-shared-no-rdc-pk-g libsh-no-rdc-pk-g)
+
+add_test(NAME test-static-no-rdc-pk-g
+     COMMAND app-static-no-rdc-pk-g)
+add_test(NAME test-shared-no-rdc-pk-g
+     COMMAND app-shared-no-rdc-pk-g)
