@@ -1,3 +1,3 @@
 #include "lib.h"
 
-void kernelb() { test_kernel<512>(); }
+void kernelb() { rep<111>::test_kernel_gen(); }

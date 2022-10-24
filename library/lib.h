@@ -26,3 +26,26 @@ template <int size> void test_kernel() {
     assert(data[i] == i);
   }
 }
+
+template <int size> struct rep {
+  static void test_kernel_gen() {
+    static int data[size];
+    {
+      buffer<int> b(data, range<1>(size));
+      queue q;
+      q.submit([&](sycl::handler &cgh) {
+        accessor<int, 1, access::mode::write, access::target::device> acc =
+            b.get_access<access::mode::write>(cgh);
+        cgh.parallel_for(range<1>(size), [=](id<1> id) { acc[id] = id[0]; });
+      });
+    }
+    for (int i = 0; i < size; i++) {
+      assert(data[i] == i);
+    }
+    rep<size-1>::test_kernel_gen();
+  }
+};
+
+template <> struct rep<0> {
+  static void test_kernel_gen() {}
+};
