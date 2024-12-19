@@ -1,9 +1,8 @@
-Build instructions:
+# Build instructions
 
-```
-mkdir build
+```bash
+cmake -B build -S . -G Ninja -DCMAKE_CXX_COMPILER=<path/to/clang++/or/icpx>
 cd build
-cmake -G Ninja -DCMAKE_CXX_COMPILER=<path/to/clang++/or/icpx> ..
 ninja
 ```
 
